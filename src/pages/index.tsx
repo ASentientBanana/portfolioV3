@@ -9,7 +9,7 @@ const Root = () => {
   return (
     <ProjectsContextProvider>
       <div
-        className="w-full bg-customBG text-customText relative"
+        className="w-full  bg-customBG text-customText relative"
         style={{ height: "100vh", overflowY: "auto" }}
       >
         <Navbar />

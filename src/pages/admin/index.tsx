@@ -7,11 +7,11 @@ import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const Admin = () => {
-  // const auth = useContext(AuthContext);
+  const auth = useContext(AuthContext);
 
-  // if (!auth?.data) {
-  //   return <Navigate to={"/"} />;
-  // }
+  if (!auth?.data) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <ProjectsContextProvider>
