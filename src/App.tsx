@@ -1,0 +1,53 @@
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import ProjectsPage from "./pages/projects";
+import Admin from "./pages/admin";
+import ProjectsAdmin from "./pages/admin/projects";
+import { StrictMode } from "react";
+import { AuthProvider } from "./context/auth";
+import { ModalProvider } from "./context/authModal";
+import Root from "./pages";
+import { Toaster } from "./components/ui/toaster";
+import AboutPage from "./pages/about";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "",
+        element: <AboutPage />,
+      },
+      {
+        path: "/projects",
+        element: <ProjectsPage />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <Admin />,
+    children: [
+      {
+        path: "projects",
+        element: <ProjectsAdmin />,
+      },
+    ],
+  },
+]);
+
+const App = () => {
+  return (
+    <StrictMode>
+      <AuthProvider>
+        <ModalProvider>
+          <RouterProvider router={router} />
+          <Toaster />
+        </ModalProvider>
+      </AuthProvider>
+    </StrictMode>
+  );
+};
+
+export default App;
