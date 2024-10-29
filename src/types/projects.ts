@@ -1,7 +1,7 @@
 export type Project = {
-  id: number;
-  createdAt: Date;
-  updatedAt: Date;
+  id?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
   deletedAt?: Date;
   name: string;
   stack: string;

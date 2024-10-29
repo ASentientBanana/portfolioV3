@@ -9,9 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { httpInstance } from "@/main";
 import { DownloadIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { getResume } from "@/helpers";
 
 const AboutPage = () => {
   const stack = [
@@ -27,29 +27,8 @@ const AboutPage = () => {
     "Unity3D",
   ];
 
-  const handleButtonClick = async () => {
-    try {
-      const response = await httpInstance.get("resume", {
-        responseType: "blob",
-      });
-
-      const url = window.URL.createObjectURL(response.data);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "Petar_Kocic_Resume.pdf";
-      document.body.appendChild(link);
-
-      link.click();
-
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
-    <div className="flex justify-center items-center h-[calc(100% - 4rem)] overflow-auto">
+    <div className="flex justify-center items-center h-full md:h-[calc(100% - 4rem)] overflow-auto">
       <Card
         className={`flex flex-col gap-4 relative sm:h-[48rem] bg-customBG sm:shadow-[35px_30px_0px_0px] sm:shadow-primary rounded-none h-full w-full sm:w-[600px]  sm:bg-[#f7f6e4] border-none`}
       >
@@ -76,7 +55,7 @@ const AboutPage = () => {
         </CardHeader>
         <CardContent>
           <CardDescription className="text-white sm:text-muted-foreground text-lg">
-            My name is Petar Kocic, and I am a developer with a fervent passion
+            My name is Petar Kocić, and I am a developer with a fervent passion
             for innovation and technology. I find immense joy in the process of
             creating, building, and experimenting with various technologies. My
             journey in the tech realm has been one of continuous growth and
@@ -106,7 +85,7 @@ const AboutPage = () => {
             <Button
               className="text-white sm:text-muted-foreground pl-0"
               variant="link"
-              onClick={handleButtonClick}
+              onClick={getResume}
             >
               <span className="pr-3">Resume/CV</span>
               <DownloadIcon />

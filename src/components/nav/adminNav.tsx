@@ -17,7 +17,7 @@ const AdminNav = () => {
           Save
         </Button>
         <Button
-          onClick={create.openModal}
+          onClick={() => create.openModal(null)}
           type="button"
           className="text-customText"
         >

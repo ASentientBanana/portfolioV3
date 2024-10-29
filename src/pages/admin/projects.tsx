@@ -3,12 +3,14 @@ import AdminNav from "@/components/nav/adminNav";
 import { toast } from "@/components/ui/use-toast";
 import { httpInstance } from "@/main";
 import { Project } from "@/types/projects";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import useProjects from "@/hooks/useProjects.tsx";
+import { AuthContext } from "@/context/auth.tsx";
 
 const ProjectsAdmin = () => {
   const { projects, refetch, setProjects } = useProjects();
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const auth = useContext(AuthContext);
 
   useEffect(() => {
     refetch();
@@ -23,12 +25,12 @@ const ProjectsAdmin = () => {
       const _project = projects[i];
 
       for (const [key, value] of Object.entries(_project)) {
-        fd.set(`f${i}-${key}`.toLowerCase(), value?.toString());
+        fd.set(`f${i}-${key}`.toLowerCase(), `${value}`);
       }
     }
 
     if (formRef.current) {
-      const _fd = new FormData(formRef.current);
+      const _fd = new FormData(formRef.current ?? undefined);
       for (const [key, value] of _fd.entries()) {
         if (value instanceof File && value.size > 0) {
           fd.set(key.toLowerCase(), value);
@@ -40,7 +42,10 @@ const ProjectsAdmin = () => {
 
     try {
       await httpInstance.put<{ projects: Project[] }>("/projects", fd, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          Authorization: auth?.data ?? "",
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       await refetch();

@@ -1,13 +1,16 @@
+import { Project } from "@/types/projects";
 import { createContext, useCallback, useState } from "react";
 
+type ProjectContext = Project | null | undefined;
+
 type ModalContextType = {
-  open: boolean;
-  openModal: () => void;
+  project: ProjectContext;
+  openModal: (_: Project | null) => void;
   closeModal: () => void;
 };
 
 export const CreateProjectModalContext = createContext<ModalContextType>({
-  open: false,
+  project: null,
   openModal: () => {},
   closeModal: () => {},
 });
@@ -17,20 +20,24 @@ export const ModalCreateProjectModalProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [open, setIsOpenModal] = useState<boolean>(false);
+  const [project, setProject] = useState<ProjectContext>();
 
-  const openModal = useCallback(() => {
-    console.log("OPEN");
-
-    setIsOpenModal(true);
+  const openModal = useCallback((project: Project | null) => {
+    console.log(project);
+    if (!project) {
+      return;
+    }
+    setProject(project);
   }, []);
 
   const closeModal = useCallback(() => {
-    setIsOpenModal(false);
+    setProject(undefined);
   }, []);
 
   return (
-    <CreateProjectModalContext.Provider value={{ open, openModal, closeModal }}>
+    <CreateProjectModalContext.Provider
+      value={{ project, openModal, closeModal }}
+    >
       {children}
     </CreateProjectModalContext.Provider>
   );

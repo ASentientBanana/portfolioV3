@@ -36,7 +36,7 @@ const ProjectAdminCard = ({ project: _project, setProjects, index }: Props) => {
   const handleSave = () => {
     setProjects((_projects) => {
       const projects = [..._projects];
-      const index = _projects.findIndex((p) => p.id === project.id);
+      const index = _projects.findIndex((p) => p.id === project?.id);
       if (index >= 0) {
         projects[index] = project;
       }
@@ -57,15 +57,15 @@ const ProjectAdminCard = ({ project: _project, setProjects, index }: Props) => {
             type="text"
             isEditing={isEditing}
             set={handleOnFieldChange}
-            value={project.name}
+            value={project?.name}
           />
-          <DeleteProjectButton id={project.id} />
+          <DeleteProjectButton id={project?.id} />
         </div>
       </CardHeader>
       <CardContent>
         <div className="mt-5">
           <img
-            src={`${httpInstance.defaults.baseURL}/${project.image}`}
+            src={`${httpInstance.defaults.baseURL}${project?.image}`}
             alt="No image"
           />
           <Input type="file" name={`f${index}-image`} id={`f${index}-image`} />
@@ -75,7 +75,7 @@ const ProjectAdminCard = ({ project: _project, setProjects, index }: Props) => {
           field="description"
           isEditing={isEditing}
           set={handleOnFieldChange}
-          value={project.description}
+          value={project?.description}
         />
 
         <AdminEditField
@@ -83,7 +83,7 @@ const ProjectAdminCard = ({ project: _project, setProjects, index }: Props) => {
           type="text"
           isEditing={isEditing}
           set={handleOnFieldChange}
-          value={project.stack}
+          value={project?.stack}
         />
       </CardContent>
       <CardFooter className="flex flex-col justify-start">
@@ -95,14 +95,14 @@ const ProjectAdminCard = ({ project: _project, setProjects, index }: Props) => {
             type="url"
             isEditing={isEditing}
             set={handleOnFieldChange}
-            value={project.github}
+            value={project?.github}
           />
           <AdminEditField
             field="live"
             type="url"
             isEditing={isEditing}
             set={handleOnFieldChange}
-            value={project.live}
+            value={project?.live}
           />
         </div>
         <div className="flex gap-5 mt-5">
