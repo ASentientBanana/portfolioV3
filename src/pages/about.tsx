@@ -28,7 +28,7 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="flex justify-center items-center h-full md:h-[calc(100% - 4rem)] overflow-auto">
+    <div className="flex justify-center items-center h-full md:h-[calc(100% - 4rem)]">
       <Card
         className={`flex flex-col gap-4 relative sm:h-[48rem] bg-customBG sm:shadow-[35px_30px_0px_0px] sm:shadow-primary rounded-none h-full w-full sm:w-[600px]  sm:bg-[#f7f6e4] border-none`}
       >

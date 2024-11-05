@@ -7,14 +7,19 @@ const ProjectCard = ({ project }: { project: Project }) => {
   const stack = project?.stack.split(",");
   return (
     <div className="relative hover:border md:hover:border-none hover:border-customPrimary">
-      <div className="flex *:hover:h-full md:hidden ">
+      <div className="block  md:hidden bg-[blue] ">
         <img
           alt="project image"
           className="h-full w-full"
           src={`${httpInstance.defaults.baseURL}${project?.image}`}
         />
-        <div className="absolute ease-in-out transition-all *:hidden *:hover:flex duration-700 w-full min-h-[2rem] h-[20%] bg-customBG/65 hover:bg-customBG z-10 bottom-0 border-t-1  border-customPrimary/40 flex flex-col p-4">
+        <p className="absolute bottom-0 w-full h-[20%] bg-customBG/65">
           {project?.name}
+        </p>
+        <div className="absolute hidden ease-in-out *:flex transition-all overflow-hidden  duration-700 w-full min-h-[2rem] h-[20%] bg-customBG/65 z-10 bottom-0 border-t-1  border-customPrimary/40  flex-col p-4">
+          <span>
+          {project?.name}
+          </span>
           <p className="mt-2">{project?.description}</p>
           <div className="absolute bottom-4 left-4">
             {stack.map((item, index) => (

@@ -9,8 +9,7 @@ const Root = () => {
   return (
     <ProjectsContextProvider>
       <div
-        className="w-full  bg-customBG text-customText relative"
-        style={{ height: "100vh", overflowY: "auto" }}
+        className="w-full bg-customBG text-customText relative"
       >
         <Navbar />
         <Outlet />

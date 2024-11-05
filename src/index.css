@@ -65,6 +65,11 @@ body,html{
     }
   }
 
+  body{
+    background-color: #31363F;
+    
+  }
+
   @layer base {
     * {
       @apply border-border;
