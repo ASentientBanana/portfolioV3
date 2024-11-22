@@ -9,6 +9,7 @@ import { ModalProvider } from "./context/authModal";
 import Root from "./pages";
 import { Toaster } from "./components/ui/toaster";
 import AboutPage from "./pages/about";
+import LoginPage from "./pages/admin/login";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <Admin />,
     children: [
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
       {
         path: "projects",
         element: <ProjectsAdmin />,

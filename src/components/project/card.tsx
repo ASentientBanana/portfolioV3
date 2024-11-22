@@ -1,48 +1,74 @@
 import { cn } from "@/lib/utils";
 import { httpInstance } from "@/main";
 import { Project } from "@/types/projects";
+// import { XIcon } from "lucide-react";
+import { useState } from "react";
 
-// <Card className="w-80  bg-customSecondary border-none text-customText">
 const ProjectCard = ({ project }: { project: Project }) => {
+  const [isActive, setIsActive] = useState(false);
+
   const stack = project?.stack.split(",");
   return (
-    <div className="relative hover:border md:hover:border-none hover:border-customPrimary">
-      <div className="block  md:hidden bg-[blue] ">
+    <div
+      className={cn(
+        "md:border-none",
+        isActive && "border border-customPrimary"
+      )}
+    >
+      {/* Mobile view */}
+      <div
+        className="md:hidden aspect-video w-full relative"
+        onClick={() => setIsActive(true)}
+        onMouseOver={() => setIsActive(true)}
+        onMouseLeave={() => setIsActive(false)}
+      >
+        {/* {isActive && (
+          <button className="z-10 absolute right-2 top-2">
+            <XIcon />
+          </button>
+        )} */}
         <img
-          alt="project image"
-          className="h-full w-full"
+          alt="project"
+          className="object-contain m-auto w-full h-full bg-transparent"
           src={`${httpInstance.defaults.baseURL}${project?.image}`}
         />
-        <p className="absolute bottom-0 w-full h-[20%] bg-customBG/65">
-          {project?.name}
-        </p>
-        <div className="absolute hidden ease-in-out *:flex transition-all overflow-hidden  duration-700 w-full min-h-[2rem] h-[20%] bg-customBG/65 z-10 bottom-0 border-t-1  border-customPrimary/40  flex-col p-4">
-          <span>
-          {project?.name}
-          </span>
-          <p className="mt-2">{project?.description}</p>
-          <div className="absolute bottom-4 left-4">
-            {stack.map((item, index) => (
-              <span
-                className={cn(index !== stack.length - 1 ? "mr-2" : "")}
-                key={index}
-              >
-                {item}
-                {index !== stack.length - 1 && ","}
-              </span>
-            ))}
-          </div>
-          <div className="absolute bottom-4 right-4 flex gap-3">
-            {project?.live && (
-              <a className="hover:underline" href={project?.live}>
-                Live
-              </a>
-            )}
-            {project?.github && (
-              <a className="hover:underline" href={project?.github}>
-                Github
-              </a>
-            )}
+        {/* Details container */}
+        <div
+          className={cn(
+            "absolute bottom-0 w-full transition-all ease-in-out   p-3",
+            isActive ? "h-full bg-customBG" : "h-[30%] bg-customBG/75"
+          )}
+        >
+          <span>{project?.name}</span>
+          <div className={cn("transition-all", "")}>
+            <p className={cn("mt-2", !isActive && "hidden")}>
+              {project?.description}
+            </p>
+            <div
+              className={cn("absolute bottom-4 left-4", !isActive && "hidden")}
+            >
+              {stack.map((item, index) => (
+                <span
+                  className={cn(index !== stack.length - 1 ? "mr-2" : "")}
+                  key={index}
+                >
+                  {item}
+                  {index !== stack.length - 1 && ","}
+                </span>
+              ))}
+            </div>
+            <div className={cn("absolute bottom-4 right-4 flex gap-3")}>
+              {project?.live && (
+                <a className="hover:underline" href={project?.live}>
+                  Live
+                </a>
+              )}
+              {project?.github && (
+                <a className="hover:underline" href={project?.github}>
+                  Github
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -57,7 +83,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
             >
               <img
                 alt="project"
-                className="object-fit bg-red-100"
+                className=" m-auto object-fit h-full bg-red-100"
                 src={`${httpInstance.defaults.baseURL}${project?.image}`}
               />
             </a>
@@ -65,7 +91,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
         </div>
         {/* right */}
         <div className="relative h-full w-full flex flex-col pl-4 pb-2 pt-4 justify-between ">
-          <p className=" max-h-[80%] text-wrap text-elipsies ">
+          <p className=" max-h-[80%] text-wrap text-ellipsis ">
             {project?.description}
           </p>
           <div className="flex justify-between flex-col sm:flex-row gap-5 sm:gap-0">

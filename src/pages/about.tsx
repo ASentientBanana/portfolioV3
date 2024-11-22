@@ -28,9 +28,9 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="flex justify-center items-center h-full md:h-[calc(100% - 4rem)]">
+    <div className="flex justify-center items-center h-full md:h-auto overflow-auto">
       <Card
-        className={`flex flex-col gap-4 relative sm:h-[48rem] bg-customBG sm:shadow-[35px_30px_0px_0px] sm:shadow-primary rounded-none h-full w-full sm:w-[600px]  sm:bg-[#f7f6e4] border-none`}
+        className={`flex flex-col gap-4 relative h-[100vh] sm:h-[48rem] bg-customBG sm:shadow-[35px_30px_0px_0px] sm:shadow-primary rounded-none  w-full sm:w-[600px]  sm:bg-[#f7f6e4] border-none`}
       >
         <CardHeader className="flex flex-row justify-between">
           <div className="flex gap-4 items-center">
@@ -39,7 +39,7 @@ const AboutPage = () => {
               <CardTitle className="text-white sm:text-secondary-foreground">
                 Petar Kocić
               </CardTitle>
-              <a className="text-customText" href="mailto: mail@petarkocic.net">
+              <a className="text-[grey]" href="mailto: mail@petarkocic.net">
                 mail@petarkocic.net
               </a>
             </div>

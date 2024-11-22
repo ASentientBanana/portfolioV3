@@ -9,9 +9,9 @@ import { FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { CreateProjectModalContext } from "@/context/createModal";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { httpInstance } from "@/main";
-import { toast } from "../ui/use-toast";
-import useProjects from "@/hooks/useProjects";
+// import { httpInstance } from "@/main";
+// import { toast } from "../ui/use-toast";
+// import useProjects from "@/hooks/useProjects";
 import { Textarea } from "../ui/textarea";
 import { Project } from "@/types/projects";
 
@@ -23,7 +23,7 @@ export function CreateProjectModal() {
   } = useContext(CreateProjectModalContext);
   const [project, setProject] = useState<Project | null>();
   const formRef = useRef<HTMLFormElement>(null);
-  const { refetch } = useProjects();
+  // const { refetch } = useProjects();
 
   useEffect(() => {
     if (typeof _project !== "undefined") {
@@ -33,7 +33,7 @@ export function CreateProjectModal() {
 
   // Project states
   //  undefined closed; null create Project; project provided is editing project;
-  const isCreate = _project === null;
+  // const isCreate = _project === null;
 
   const setInputValue = (key: keyof Project, value: string) => {
     if (!project) {
@@ -43,13 +43,13 @@ export function CreateProjectModal() {
     setProject({ ...project, [key]: value });
   };
 
-  const validate = (fd: FormData): boolean => {
-    const reg = new RegExp("^[0-9]$");
-    if (!reg.test((fd.get("position") as string) ?? "")) {
-      return false;
-    }
-    return true;
-  };
+  // const validate = (fd: FormData): boolean => {
+  //   const reg = new RegExp("^[0-9]$");
+  //   if (!reg.test((fd.get("position") as string) ?? "")) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,38 +67,38 @@ export function CreateProjectModal() {
     console.log(_project);
   }, [_project, project]);
 
-  const updateProject = async () => {
-    if (!formRef.current) {
-      return;
-    }
-  };
+  // const updateProject = async () => {
+  //   if (!formRef.current) {
+  //     return;
+  //   }
+  // };
 
-  const createProject = async () => {
-    if (!formRef.current) {
-      return;
-    }
-    const fd = new FormData(formRef.current);
+  // const createProject = async () => {
+  //   if (!formRef.current) {
+  //     return;
+  //   }
+  //   const fd = new FormData(formRef.current);
 
-    const isValid = validate(fd);
-    if (!isValid) {
-      return;
-    }
+  //   const isValid = validate(fd);
+  //   if (!isValid) {
+  //     return;
+  //   }
 
-    const response = await httpInstance.post("/projects", fd, {
-      headers: {
-        Authorization: "",
-      },
-    });
-    if (response.status !== 200) {
-      toast({
-        description: "Something went wrong",
-      });
-      return;
-    }
-    closeModal();
-    formRef.current.reset();
-    refetch();
-  };
+  //   const response = await httpInstance.post("/projects", fd, {
+  //     headers: {
+  //       Authorization: "",
+  //     },
+  //   });
+  //   if (response.status !== 200) {
+  //     toast({
+  //       description: "Something went wrong",
+  //     });
+  //     return;
+  //   }
+  //   closeModal();
+  //   formRef.current.reset();
+  //   refetch();
+  // };
 
   const handleSubmitButtonClick = () => {
     formRef.current?.requestSubmit();

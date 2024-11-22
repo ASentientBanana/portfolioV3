@@ -59,7 +59,7 @@ const ProjectAdminCard = ({ project: _project, setProjects, index }: Props) => {
             set={handleOnFieldChange}
             value={project?.name}
           />
-          <DeleteProjectButton id={project?.id} />
+          <DeleteProjectButton id={project?.id ?? 0} />
         </div>
       </CardHeader>
       <CardContent>

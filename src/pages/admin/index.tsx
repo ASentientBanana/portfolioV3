@@ -10,7 +10,7 @@ import { Navigate, Outlet } from "react-router-dom";
 const Admin = () => {
   const auth = useContext(AuthContext);
   if (!auth?.data) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={"/admin/login"} />;
     // if (!token) {
     //   return <Navigate to={"/"} />;
     // } else {
