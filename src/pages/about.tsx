@@ -63,9 +63,7 @@ const AboutPage = () => {
           </CardDescription>
           <br />
           <CardDescription className="text-white sm:text-muted-foreground text-lg">
-            I started out as a freelancer front end developer, went to game dev
-            and unity than back to web/mobile dev. During my career i had the
-            opportunity to be in a position of a dev, project manager and CTO.
+            During my career i had the opportunity to be in a position of a dev, project manager and CTO.
             Along with programming i also love learning about, tinkering with
             and using linux (and yes i do use Arch Btw).
           </CardDescription>
