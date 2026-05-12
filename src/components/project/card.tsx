@@ -73,7 +73,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
         </div>
       </div>
       {/*  larger card */}
-      <div className="hidden md:flex  hover:shadow-[#f7f6e4] hover:scale-110 md:hover:scale-100  md:hover:shadow-[35px_30px_0px_0px] bg-customBG transition duration-300 md:hover:-translate-y-8 md:hover:-translate-x-8  relative p-4 flex-col items-center sm:jsutify-start sm:flex-row gap-2  md:h-48 w-full border border-customPrimary ">
+      <div className="hidden md:flex  hover:shadow-[#f7f6e4] hover:scale-110 md:hover:scale-100  md:hover:shadow-[-40px_20px_0px_0px] bg-customBG transition duration-300 md:hover:-translate-y-3 md:hover:-translate-x--8  relative p-4 flex-col items-center sm:jsutify-start sm:flex-row gap-2  md:h-48 w-full border border-customPrimary ">
         {/* left */}
         <div className="flex flex-col h-full w-[50%] sm:w-[30%]">
           {project?.image && (

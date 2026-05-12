@@ -11,7 +11,7 @@ const ProjectsPage = () => {
   }, [refetch]);
 
   return (
-    <div className="flex flex-col gap-8 md:gap-4 px-8 py-2 w-full  md:w-auto md:max-w-[60rem] m-auto overflow-auto">
+    <div className="flex flex-col gap-8 md:gap-4 px-8 py-5 w-full  md:w-auto md:max-w-[60rem] m-auto overflow-auto">
       {projects.map((project) => (
         <ProjectCard project={project} key={project?.id ?? project?.name} />
       ))}
