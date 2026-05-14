@@ -2,6 +2,7 @@ import { Project } from "@/types/projects";
 import ProjectCard from "./project/card";
 import { useContext } from "react";
 import { CreateProjectModalContext } from "@/context/createModal";
+import { httpInstance } from "@/main";
 
 type Props = {
   projects: Project[];
@@ -15,14 +16,15 @@ const AdminProjectList = ({ projects }: Props) => {
     openModal(project);
   };
   return (
-    <div className="flex flex-col justify-evenly gap-4 px-5 py-12 w-[80%] md:w-auto md:max-w-[80rem] m-auto">
+    <div className="grid grid-cols-4 m-auto w-[80%] mt-10 pt-10 palce-items-center ">
       {projects.map((project) => (
         <div
-          className="cursor-pointer"
+          className="cursor-pointer  flex flex-col gap-4 items-center justify-start p-4"
           onClick={() => handleProjectSelect(project)}
           key={project?.id}
         >
-          <ProjectCard project={project} key={project?.id} />
+          <img className="h-20 w-20" alt="NO IMAGE PROVIDED" src={httpInstance.defaults.baseURL + project.image} />
+          <span className="text-white">{project.name}</span>
         </div>
       ))}
     </div>

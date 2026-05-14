@@ -11,8 +11,8 @@ type ModalContextType = {
 
 export const CreateProjectModalContext = createContext<ModalContextType>({
   project: null,
-  openModal: () => {},
-  closeModal: () => {},
+  openModal: () => { },
+  closeModal: () => { },
 });
 
 export const ModalCreateProjectModalProvider = ({

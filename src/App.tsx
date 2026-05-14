@@ -10,6 +10,7 @@ import Root from "./pages";
 import { Toaster } from "./components/ui/toaster";
 import AboutPage from "./pages/about";
 import LoginPage from "./pages/admin/login";
+import AboutAdmin from "./pages/admin/about";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "projects",
         element: <ProjectsAdmin />,
+      },
+      {
+        path: "about",
+        element: <AboutAdmin />,
       },
     ],
   },

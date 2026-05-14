@@ -11,7 +11,7 @@ const LoginForm = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [_, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -36,7 +36,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <main className="flex items-center space-x-2 w-[80%] m-auto pt-[4rem]">
       <div className="grid flex-1 gap-2">
         <Input
           className="bg-customBG text-customText"
@@ -52,8 +52,11 @@ const LoginForm = () => {
             setPassword(e.target.value);
           }}
         />
+        <button onClick={handleSubmit} type="button">
+          Submit
+        </button>
       </div>
-    </div>
+    </main>
   );
 };
 

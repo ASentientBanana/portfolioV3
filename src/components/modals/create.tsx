@@ -107,7 +107,7 @@ export function CreateProjectModal() {
   return (
     <Dialog
       // open={(project === null || !!project) && typeof project !== "undefined"}
-      open={!!project}
+      open={Boolean(project)}
       defaultOpen={false}
       onOpenChange={(_open) => {
         if (_open) {
@@ -129,47 +129,47 @@ export function CreateProjectModal() {
           onSubmit={handleSubmit}
         >
           <Input
-            value={project?.name}
+            value={project?.name ?? ""}
             onChange={(v) => setInputValue("name", v.target.value)}
             placeholder="name"
             name="name"
           />
           <Textarea
             placeholder="description"
-            value={project?.description}
+            value={project?.description ?? ""}
             onChange={(v) => setInputValue("description", v.target.value)}
             name="description"
           />
           <Input
-            value={project?.live}
+            value={project?.live ?? ""}
             onChange={(v) => setInputValue("live", v.target.value)}
             type="url"
             placeholder="live"
             name="live"
           />
           <Input
-            value={project?.github}
+            value={project?.github ?? ""}
             onChange={(v) => setInputValue("github", v.target.value)}
             type="url"
             placeholder="github"
             name="github"
           />
           <Input
-            value={project?.position}
+            value={project?.position ?? ""}
             onChange={(v) => setInputValue("position", v.target.value)}
             placeholder="position"
             name="position"
             type="number"
           />
           <Input
-            value={project?.stack}
+            value={project?.stack ?? ""}
             onChange={(v) => setInputValue("stack", v.target.value)}
             placeholder="Stack"
             name="stack"
             type="text"
           />
+
           <Input
-            value={project?.image}
             onChange={(v) => setInputValue("image", v.target.value)}
             className="text-[white]"
             name="image"

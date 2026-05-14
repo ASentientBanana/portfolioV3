@@ -5,18 +5,22 @@ import { ProjectsContextProvider } from "@/context/projects";
 import { httpInstance } from "@/main";
 import { useContext } from "react";
 
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const Admin = () => {
   const auth = useContext(AuthContext);
-  if (!auth?.data) {
-    return <Navigate to={"/admin/login"} />;
-    // if (!token) {
-    //   return <Navigate to={"/"} />;
-    // } else {
-    //   auth?.login(token);
-    // }
-  }
+  // const location = useLocation()
+
+  // const route = useRoute
+  // if (!auth?.data && location.pathname !== "/admin/login") {
+  //   return
+  //   return <Navigate to={"/admin/login"} />;
+  //   // if (!token) {
+  //   //   return <Navigate to={"/"} />;
+  //   // } else {
+  //   //   auth?.login(token);
+  //   // }
+  // }
 
   httpInstance.interceptors.request.use(async (config) => {
     if (!config.headers.Authorization && auth?.data) {
