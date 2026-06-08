@@ -4,7 +4,13 @@ import { toast } from "./ui/use-toast";
 import { httpInstance } from "@/main";
 import useProjects from "@/hooks/useProjects";
 
-const DeleteProjectButton = ({ id }: { id: string | number }) => {
+const DeleteProjectButton = ({
+  id,
+  onComplete,
+}: {
+  id: number | number;
+  onComplete?: () => void;
+}) => {
   const [isConfirming, setIsConfirming] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { refetch } = useProjects();
@@ -12,9 +18,8 @@ const DeleteProjectButton = ({ id }: { id: string | number }) => {
   const handleDelete = async () => {
     setIsLoading(true);
     try {
-      await httpInstance.delete(`/projects/${id}`);
-      console.log("done?");
-
+      await httpInstance.delete(`projects/${id}`);
+      onComplete?.();
       await refetch();
     } catch (error) {
       toast({ description: "Problem deleting projects." });
@@ -43,7 +48,7 @@ const DeleteProjectButton = ({ id }: { id: string | number }) => {
           onClick={() => setIsConfirming(false)}
           className="bg-red-500"
         >
-          Deny
+          Cancel
         </Button>
       )}
     </div>

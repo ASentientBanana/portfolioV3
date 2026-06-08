@@ -48,8 +48,6 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  console.log(sessionStorage.getItem("pk-tk"));
-
   return (
     <StrictMode>
       <AuthProvider>

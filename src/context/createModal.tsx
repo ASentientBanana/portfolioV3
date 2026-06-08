@@ -1,17 +1,17 @@
 import { Project } from "@/types/projects";
 import { createContext, useCallback, useState } from "react";
 
-type ProjectContext = Project | null | undefined;
+type ProjectContext = Project | undefined;
 
 type ModalContextType = {
   project: ProjectContext;
-  openModal: (_: Project | null) => void;
+  openModal: (_: Project) => void;
   closeModal: () => void;
 };
 
 export const CreateProjectModalContext = createContext<ModalContextType>({
-  project: null,
-  openModal: () => { },
+  project: undefined,
+  openModal: (_: Project) => { },
   closeModal: () => { },
 });
 
@@ -22,15 +22,13 @@ export const ModalCreateProjectModalProvider = ({
 }) => {
   const [project, setProject] = useState<ProjectContext>();
 
-  const openModal = useCallback((project: Project | null) => {
-    console.log(project);
-    if (!project) {
-      return;
-    }
+  const openModal = useCallback((project: Project) => {
+
     setProject(project);
   }, []);
 
   const closeModal = useCallback(() => {
+    console.log('Closing modal')
     setProject(undefined);
   }, []);
 

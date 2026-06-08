@@ -9,31 +9,33 @@ import { FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { CreateProjectModalContext } from "@/context/createModal";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-// import { httpInstance } from "@/main";
-// import { toast } from "../ui/use-toast";
-// import useProjects from "@/hooks/useProjects";
 import { Textarea } from "../ui/textarea";
 import { Project } from "@/types/projects";
+import { Description } from "@radix-ui/react-toast";
+import { ProjectsContext } from "@/context/projects";
+import DeleteProjectButton from "../deleteProjectButton";
+import { toast } from "../ui/use-toast";
+import { httpInstance } from "@/main";
 
 export function CreateProjectModal() {
-  const {
-    project: _project,
-    closeModal,
-    openModal,
-  } = useContext(CreateProjectModalContext);
+  const { project: _project, closeModal } = useContext(
+    CreateProjectModalContext,
+  );
+  const { refetch } = useContext(ProjectsContext);
   const [project, setProject] = useState<Project | null>();
   const formRef = useRef<HTMLFormElement>(null);
-  // const { refetch } = useProjects();
+  const isNewProjectRef = useRef(true);
 
   useEffect(() => {
-    if (typeof _project !== "undefined") {
-      setProject(_project);
+    if (!_project) {
+      setProject(null);
+      return;
     }
-  }, [_project]);
+    setProject(_project);
+    isNewProjectRef.current = project?.id === -1 && false;
 
-  // Project states
-  //  undefined closed; null create Project; project provided is editing project;
-  // const isCreate = _project === null;
+    return;
+  }, [_project]);
 
   const setInputValue = (key: keyof Project, value: string) => {
     if (!project) {
@@ -43,86 +45,88 @@ export function CreateProjectModal() {
     setProject({ ...project, [key]: value });
   };
 
-  // const validate = (fd: FormData): boolean => {
-  //   const reg = new RegExp("^[0-9]$");
-  //   if (!reg.test((fd.get("position") as string) ?? "")) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(project);
-
-    // if (isCreate) {
-    //   createProject();
-    // } else {
-    //   updateProject();
-    // }
-  };
-
-  useEffect(() => {
-    console.log(project);
-    console.log(_project);
-  }, [_project, project]);
-
-  // const updateProject = async () => {
-  //   if (!formRef.current) {
-  //     return;
-  //   }
-  // };
-
-  // const createProject = async () => {
-  //   if (!formRef.current) {
-  //     return;
-  //   }
-  //   const fd = new FormData(formRef.current);
-
-  //   const isValid = validate(fd);
-  //   if (!isValid) {
-  //     return;
-  //   }
-
-  //   const response = await httpInstance.post("/projects", fd, {
-  //     headers: {
-  //       Authorization: "",
-  //     },
-  //   });
-  //   if (response.status !== 200) {
-  //     toast({
-  //       description: "Something went wrong",
-  //     });
-  //     return;
-  //   }
-  //   closeModal();
-  //   formRef.current.reset();
-  //   refetch();
-  // };
+  useEffect(() => {}, [_project, project]);
 
   const handleSubmitButtonClick = () => {
     formRef.current?.requestSubmit();
   };
 
-  return (
-    <Dialog
-      // open={(project === null || !!project) && typeof project !== "undefined"}
-      open={Boolean(project)}
-      defaultOpen={false}
-      onOpenChange={(_open) => {
-        if (_open) {
-          if (typeof project !== "undefined") {
-            openModal(project);
-          }
-        } else {
-          closeModal();
+  const validateFormData = (fd: FormData): boolean => {
+    for (const [key, val] of fd.entries()) {
+      if (key === "live" || key === "github" || key === "image") {
+        continue;
+      }
+      if (!val) {
+        toast({
+          variant: "destructive",
+          description: `Invalid form:\n missing field "${key}"`,
+        });
+        return false;
+      }
+      if (key === "image" && project?.id === -1) {
+        const f = val as File;
+        if (f.size === 0) {
+          toast({
+            variant: "destructive",
+            description: "Invalid form: image not selected",
+          });
+          return false;
         }
-      }}
-    >
+      }
+    }
+    return true;
+  };
+
+  const handleProjectUpdate = async (fd: FormData) => {
+    if (project?.id === -1) {
+      return;
+    }
+    try {
+      const res = await httpInstance.put("projects/" + project?.id, fd);
+      if (res.status !== 200) {
+        toast({ description: "Problem updating the project" });
+        return;
+      }
+    } catch (e) {
+      console.error(e);
+      toast({ description: "Problem updating the project" });
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.target as HTMLFormElement);
+    const isValid = validateFormData(fd);
+
+    if (!isValid) {
+      return;
+    }
+
+    if ((fd.get("image") as File).size === 0) {
+      fd.delete("image");
+    }
+
+    try {
+      if (_project?.id === -1) {
+        await httpInstance.post("/projects", fd);
+      } else {
+        await handleProjectUpdate(fd);
+      }
+      refetch();
+      closeModal();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return (
+    <Dialog open={!!project} defaultOpen={false}>
       <DialogContent className="sm:max-w-md bg-customBG border-customText text-customText">
         <DialogHeader>
-          <DialogTitle className="text-customText">Admin login</DialogTitle>
+          <DialogTitle className="text-customText"></DialogTitle>
         </DialogHeader>
+        <Description></Description>
+
         <form
           className=" flex flex-col gap-4 text-[black]"
           ref={formRef}
@@ -176,9 +180,26 @@ export function CreateProjectModal() {
             type="file"
           />
         </form>
-        <DialogFooter className="sm:justify-end ">
+        <DialogFooter className="sm:justify-between ">
+          <Button
+            onClick={() => {
+              console.log("Cancel");
+              // setProject(undefined)
+              closeModal();
+            }}
+            type="submit"
+          >
+            Cancel
+          </Button>
+
+          {_project?.id !== -1 && (
+            <DeleteProjectButton
+              id={_project?.id as number}
+              onComplete={closeModal}
+            />
+          )}
           <Button onClick={handleSubmitButtonClick} type="submit">
-            Submit
+            Save
           </Button>
         </DialogFooter>
       </DialogContent>

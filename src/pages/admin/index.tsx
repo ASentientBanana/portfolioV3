@@ -1,11 +1,12 @@
 import { CreateProjectModal } from "@/components/modals/create";
+import { AdminProjectProvider } from "@/context/adminProjects";
 import { AuthContext } from "@/context/auth";
 import { ModalCreateProjectModalProvider } from "@/context/createModal";
 import { ProjectsContextProvider } from "@/context/projects";
 import { httpInstance } from "@/main";
 import { useContext } from "react";
 
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const Admin = () => {
   const auth = useContext(AuthContext);
@@ -33,7 +34,9 @@ const Admin = () => {
   return (
     <ProjectsContextProvider>
       <ModalCreateProjectModalProvider>
-        <Outlet />
+        <AdminProjectProvider>
+          <Outlet />
+        </AdminProjectProvider>
         <CreateProjectModal />
       </ModalCreateProjectModalProvider>
     </ProjectsContextProvider>

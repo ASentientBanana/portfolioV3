@@ -1,11 +1,17 @@
 import ProjectCard from "@/components/project/card";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useProjects from "@/hooks/useProjects.tsx";
+import { Project } from "@/types/projects";
 
 const ProjectsPage = () => {
-  const { projects, refetch } = useProjects();
-
+  const { projects: sourceProjects, refetch } = useProjects();
+  const [projects, setProjects] = useState<Project[]>([]);
+  useEffect(() => {
+    const p = [...sourceProjects].sort((a, b) => a.position - b.position);
+    console.log(p);
+    setProjects(p);
+  }, [sourceProjects]);
   useEffect(() => {
     refetch();
   }, [refetch]);
