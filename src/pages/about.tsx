@@ -12,19 +12,22 @@ import {
 import { DownloadIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getResume } from "@/helpers";
+import { httpInstance } from "@/main";
 
 const AboutPage = () => {
   const stack = [
     "Javascript",
     "TypeScript",
     "Golang",
+    "Python",
     "React",
+    "Java",
     "ReactNative",
     "NextJS",
     "Flutter",
     "NodeJS",
     "Nest",
-    "Unity3D",
+    "PostgreSQL",
   ];
 
   return (
@@ -35,6 +38,10 @@ const AboutPage = () => {
         <CardHeader className="flex flex-row justify-between">
           <div className="flex gap-4 items-center">
             <img className="h-24 w-24 m-4 rounded-sm" src={me} />
+            {/*<img
+              className="h-24 w-24 m-4 rounded-sm"
+              src={httpInstance.defaults.baseURL + "download/anime_avatar.png"}
+            />*/}
             <div>
               <CardTitle className="text-white sm:text-secondary-foreground">
                 Petar Kocić
@@ -55,17 +62,20 @@ const AboutPage = () => {
         </CardHeader>
         <CardContent>
           <CardDescription className="text-white sm:text-muted-foreground text-lg">
-            My name is Petar Kocić, and I am a developer with a fervent passion
-            for innovation and technology. I find immense joy in the process of
-            creating, building, and experimenting with various technologies. My
-            journey in the tech realm has been one of continuous growth and
-            learning.
+            My name is Petar Kocić, and I'm a software developer. I enjoy
+            creating software, experimenting with new technologies, and
+            repeatedly discovering that the bug was, in fact, my fault. When I'm
+            not building things, I'm usually learning something new so I can
+            build even more things that probably didn't need to exist.
           </CardDescription>
           <br />
           <CardDescription className="text-white sm:text-muted-foreground text-lg">
-            During my career i had the opportunity to be in a position of a dev, project manager and CTO.
+            During my career i had the opportunity to be in a position of a dev,
+            team lead and CTO.
+          </CardDescription>
+          <CardDescription className="text-white sm:text-muted-foreground text-lg">
             Along with programming i also love learning about, tinkering with
-            and using linux (and yes i do use Arch Btw).
+            and using linux.
           </CardDescription>
         </CardContent>
         <CardFooter className="relative sm:absolute sm:bottom-36  h-14 flex items-start flex-col text-white sm:text-muted-foreground">

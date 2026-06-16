@@ -1,8 +1,9 @@
 import { AuthContext } from "@/context/auth";
-import { useContext, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "./ui/input";
 import { toast } from "./ui/use-toast";
+import { httpInstance } from "@/main";
 
 const LoginForm = () => {
   const authContext = useContext(AuthContext);
@@ -11,20 +12,22 @@ const LoginForm = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [_, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:9898/login", {
-        method: "POST",
-        body: JSON.stringify({ Username: username, Password: password }),
+      const response = await httpInstance.post("/login", {
+        username,
+        password,
       });
-      const data = await response.json();
-      if (!data.token) {
-        throw Error("No token found.");
+      if (response.status !== 200 || !response.data.token) {
+        throw Error("Problem logging in");
       }
-      authContext?.login(data.token);
+
+      authContext?.login(response.data.token);
       navigate("/admin/projects");
     } catch (error) {
       toast({
@@ -36,26 +39,30 @@ const LoginForm = () => {
   };
 
   return (
-    <main className="flex items-center space-x-2 w-[80%] m-auto pt-[4rem]">
-      <div className="grid flex-1 gap-2">
+    <main className=" mx-auto mt-[5rem] flex items-center justify-center gap-4 relative h-[50vh] sm:h-[28rem] bg-customBG sm:shadow-[35px_30px_0px_0px] sm:shadow-primary rounded-none  w-full sm:w-[600px]  sm:bg-[#f7f6e4] border-none`">
+      <form className="w-[80%] flex flex-col gap-4" onSubmit={handleSubmit}>
+        <h1 className="m-auto font-bold text-4xl text-customBG">Welcome</h1>
         <Input
-          className="bg-customBG text-customText"
+          className="bg-transparent border-customBG text-customBG"
+          name="username"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
-          className="bg-customBG text-customText"
+          className="bg-transparent text-customBG border-customBG"
+          name="password"
           placeholder="Password"
+          type="password"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
         />
-        <button onClick={handleSubmit} type="button">
+        <button disabled={isLoading} type="submit">
           Submit
         </button>
-      </div>
+      </form>
     </main>
   );
 };

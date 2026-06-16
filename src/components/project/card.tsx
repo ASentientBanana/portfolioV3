@@ -12,7 +12,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     <div
       className={cn(
         "md:border-none",
-        isActive && "border border-customPrimary"
+        isActive && "border border-customPrimary",
       )}
     >
       {/* Mobile view */}
@@ -36,7 +36,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <div
           className={cn(
             "absolute bottom-0 w-full transition-all ease-in-out   p-3",
-            isActive ? "h-full bg-customBG" : "h-[30%] bg-customBG/75"
+            isActive ? "h-full bg-customBG" : "h-[30%] bg-customBG/75",
           )}
         >
           <span>{project?.name}</span>
@@ -73,7 +73,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
         </div>
       </div>
       {/*  larger card */}
-      <div className="hidden md:flex  hover:shadow-[#f7f6e4] hover:scale-110 md:hover:scale-100  md:hover:shadow-[-40px_20px_0px_0px] bg-customBG transition duration-300 md:hover:-translate-y-3 md:hover:-translate-x--8  relative p-4 flex-col items-center sm:jsutify-start sm:flex-row gap-2  md:h-48 w-full border border-customPrimary ">
+      {/*shadow-cyan-50 md:hover:shadow-[5px_5px_0px_0px]*/}
+      <div className="hidden md:flex hover:scale-110 md:hover:scale-100 bg-customBG transition duration-300 md:hover:-translate-y-3 md:hover:-translate-x--8  relative p-4 flex-col items-center sm:jsutify-start sm:flex-row gap-2  md:h-48 w-full border border-customPrimary ">
         {/* left */}
         <div className="flex flex-col h-full w-[50%] sm:w-[30%]">
           {project?.image && (
