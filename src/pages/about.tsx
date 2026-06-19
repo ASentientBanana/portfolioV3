@@ -12,7 +12,6 @@ import {
 import { DownloadIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getResume } from "@/helpers";
-import { httpInstance } from "@/main";
 
 const AboutPage = () => {
   const stack = [
