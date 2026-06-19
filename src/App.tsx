@@ -9,6 +9,8 @@ import { ModalProvider } from "./context/authModal";
 import Root from "./pages";
 import { Toaster } from "./components/ui/toaster";
 import AboutPage from "./pages/about";
+import LoginPage from "./pages/admin/login";
+import AboutAdmin from "./pages/admin/about";
 
 const router = createBrowserRouter([
   {
@@ -30,16 +32,22 @@ const router = createBrowserRouter([
     element: <Admin />,
     children: [
       {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
         path: "projects",
         element: <ProjectsAdmin />,
+      },
+      {
+        path: "about",
+        element: <AboutAdmin />,
       },
     ],
   },
 ]);
 
 const App = () => {
-  console.log(sessionStorage.getItem("pk-tk"));
-
   return (
     <StrictMode>
       <AuthProvider>
