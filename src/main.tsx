@@ -7,8 +7,8 @@ import axios from "axios";
 const rootElement = document.getElementById("root")!;
 
 export const httpInstance = axios.create({
-  // baseURL: "https://admin.petarkocic.net/",
-  baseURL: "http://localhost:9898/",
+  baseURL: "https://admin.petarkocic.net/",
+  // baseURL: "http://localhost:9898/",
   timeout: 1000,
 });
 
