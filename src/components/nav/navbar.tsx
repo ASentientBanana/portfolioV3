@@ -1,6 +1,7 @@
-import { getResume } from "@/helpers";
+
+import { httpInstance } from "@/main";
 import { ArrowLeft } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -15,9 +16,9 @@ const Navbar = () => {
       ) : (
         <div />
       )}
-      <button onClick={getResume}>
+      <Link target="#" to={httpInstance.defaults.baseURL + "download/resume.pdf"}>
         <span className="[&.active]:font-bold">Resume / CV</span>
-      </button>
+      </Link>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { GitBranch, Linkedin } from "lucide-react";
 import me from "../assets/me.jpg";
 import {
@@ -11,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { DownloadIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { getResume } from "@/helpers";
+import { httpInstance } from "@/main";
 
 const AboutPage = () => {
   const stack = [
@@ -89,14 +88,14 @@ const AboutPage = () => {
             ))}
           </div>
           <div className="flex justify-between items-center w-full pt-4">
-            <Button
-              className="text-white sm:text-muted-foreground pl-0"
-              variant="link"
-              onClick={getResume}
+            <Link
+              target="#"
+              to={httpInstance.defaults.baseURL + "download/resume.pdf"}
+              className="text-white flex sm:text-muted-foreground pl-0"
             >
               <span className="pr-3">Resume/CV</span>
               <DownloadIcon />
-            </Button>
+            </Link>
             <Link className="pr-3" to="/projects">
               Project list
             </Link>
